@@ -9,8 +9,10 @@
 import UIKit
 import CoreLocation
 import MapKit
+import GooglePlaces
 
 class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDelegate,MainView  {
+    
 
 
     @IBOutlet weak var sunRiseTime: UILabel!
@@ -18,23 +20,31 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
     @IBOutlet weak var placeLabel: UILabel!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     
-    @IBAction func search(_ sender: Any) {
+    @IBAction func touchLocationIcon(_ sender: Any) {
+        let authState = CLLocationManager.authorizationStatus()
         
-        let searchField = UISearchController(searchResultsController: nil)
-        
-            searchField.searchBar.delegate = self
-        
-            searchField.searchBar.barTintColor = .black
-        
-        present(searchField, animated: true , completion: nil)
+        if(authState == .authorizedAlways || authState == .authorizedWhenInUse){
+            setupLocation(location: locationManager.location!)
+            
+        }
     }
     
-    
+    @IBAction func search(_ sender: Any) {
+        
+        let autocompleteController = GMSAutocompleteViewController()
+       
+            autocompleteController.delegate = self
+        
+        present(autocompleteController, animated: true, completion: nil)
+    }
+   
     let presenter = Presenter()
-    
+    var place: GMSPlace!
     var results: [String] = []
     var locationManager = CLLocationManager()
-
+    
+    
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
@@ -43,21 +53,28 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.requestAlwaysAuthorization()
+            locationManager.requestWhenInUseAuthorization()
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
            
             
+        }else{
+         
+            let alert = UIAlertController(title: "Alert", message: "Turn on Location service to use this app", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+           
+            DispatchQueue.main.async {
+               self.present(alert, animated: true, completion: nil)
+            }
         }
 
         self.presenter.view = self
 
     }
-    
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -77,28 +94,17 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
         self.activity.startAnimating()
         
         self.presenter.getSunInfo(long:(location.coordinate.longitude.description), latt: (location.coordinate.latitude.description))
-
-        location.getPlace() {placemark in
-            
-            guard let placemark = placemark else { return }
-            
-            if placemark.locality != nil && placemark.country != nil {
-            
-                self.placeLabel.text = placemark.locality! + ",\n" + placemark.country!
-                
-            }else{
-                self.placeLabel.text = placemark.name
-
-            }
-            
-        }
-       
-
-       
+        self.presenter.getPlace()
+        
     }
     
     
+    func getPlace(place: GMSPlace) {
+        self.place = place
+        self.placeLabel.text = place.name
+    }
 
+    
     func showSunInfo(results: [String]) {
       
         self.results = results
@@ -111,39 +117,28 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
 
     }
   
+    
+}
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
+extension ViewController: GMSAutocompleteViewControllerDelegate {
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         
-        let serachRequest = MKLocalSearch.Request()
+        dismiss(animated: true, completion: nil)
         
-            serachRequest.naturalLanguageQuery = searchBar.text
+        self.placeLabel.text = place.name
         
-        let request = MKLocalSearch(request: serachRequest)
-            request.start { (response,error) in
-            
-            
-            if response == nil {
-                
-                print("No data found")
-                
-            }else{
-                
-                let longitude = response?.boundingRegion.center.longitude
-                
-                let lattitude = response?.boundingRegion.center.latitude
-                
-                let location = CLLocation(latitude: lattitude!, longitude: longitude!)
-                
-                self.setupLocation(location: location)
-                      
-            }
-        
-        }
-        
+        self.presenter.getSunInfo(long: place.coordinate.longitude.description, latt: place.coordinate.latitude.description)
+
     }
-    
-    
-    
-    
+
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error: ", error.localizedDescription)
+    }
+
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+
 }

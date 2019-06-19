@@ -107,11 +107,21 @@
                                     <constraint firstItem="F7L-FG-imC" firstAttribute="bottom" secondItem="K49-E9-p7T" secondAttribute="bottomMargin" id="eQy-TJ-k7n"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-xh-iSw">
+                                <rect key="frame" x="334" y="583.33333333333337" width="60" height="66.333333333333371"/>
+                                <state key="normal" backgroundImage="location"/>
+                                <connections>
+                                    <action selector="touchLocationIcon:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DAa-v4-3Aj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Dqo-xh-iSw" firstAttribute="height" secondItem="4Zo-ig-7g3" secondAttribute="height" multiplier="0.09" id="3Kc-kx-Bvv"/>
+                            <constraint firstItem="Dqo-xh-iSw" firstAttribute="top" secondItem="xWT-bo-ins" secondAttribute="bottom" constant="-15" id="5CT-aD-dyi"/>
                             <constraint firstItem="xWT-bo-ins" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="304" id="6SQ-He-diR"/>
                             <constraint firstItem="4Zo-ig-7g3" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Mpk-9e-DeH"/>
+                            <constraint firstItem="Dqo-xh-iSw" firstAttribute="width" secondItem="4Zo-ig-7g3" secondAttribute="width" multiplier="0.15" constant="-2" id="OcK-S0-31T"/>
                             <constraint firstItem="xWT-bo-ins" firstAttribute="height" secondItem="4Zo-ig-7g3" secondAttribute="height" multiplier="0.4" id="PKh-qf-y3x"/>
                             <constraint firstItem="xWT-bo-ins" firstAttribute="trailing" secondItem="K49-E9-p7T" secondAttribute="trailing" id="X9S-9B-EgN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4Zo-ig-7g3" secondAttribute="trailing" id="aK9-EZ-Yoa"/>
@@ -119,6 +129,7 @@
                             <constraint firstItem="xWT-bo-ins" firstAttribute="leading" secondItem="K49-E9-p7T" secondAttribute="leading" id="ckm-5j-dYb"/>
                             <constraint firstItem="K49-E9-p7T" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-24" id="oIi-LC-9Cv"/>
                             <constraint firstItem="xWT-bo-ins" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="rDi-qM-fW0"/>
+                            <constraint firstItem="Dqo-xh-iSw" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="rSB-2j-Rxy"/>
                             <constraint firstItem="xWT-bo-ins" firstAttribute="top" secondItem="K49-E9-p7T" secondAttribute="bottom" constant="53" id="riV-cU-Ziz"/>
                             <constraint firstAttribute="bottom" secondItem="4Zo-ig-7g3" secondAttribute="bottom" id="ud6-BO-Zkx"/>
                             <constraint firstItem="4Zo-ig-7g3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zdo-Ol-cUS"/>
@@ -134,10 +145,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.23188405797103" y="131.25"/>
+            <point key="canvasLocation" x="135" y="130.98591549295776"/>
         </scene>
     </scenes>
     <resources>
+        <image name="location" width="28.5" height="28.5"/>
         <image name="main" width="626" height="884"/>
         <image name="search" width="34.400001525878906" height="34.400001525878906"/>
     </resources>

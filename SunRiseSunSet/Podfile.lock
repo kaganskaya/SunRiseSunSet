@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (4.8.1)
+  - GoogleMaps/Base (3.0.1)
+  - GooglePlaces (3.0.1):
+    - GoogleMaps/Base (= 3.0.1)
   - RxAtomic (4.4.0)
   - RxCocoa (4.4.0):
     - RxSwift (~> 4.0)
@@ -9,6 +12,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - GooglePlaces
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
   - SwiftyJSON
@@ -16,6 +20,8 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - GoogleMaps
+    - GooglePlaces
     - RxAtomic
     - RxCocoa
     - RxSwift
@@ -23,11 +29,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  GoogleMaps: ec8c032304e19f609aba11096eed7207ca1af32d
+  GooglePlaces: 44d1be1cf4c2919563162fe369c117168e551e6d
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
   RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
   RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 460bea2a08e8b4455139ab8989863acccf190a23
+PODFILE CHECKSUM: 2eeab47359f422b6b0d1626ba6c853be28143488
 
 COCOAPODS: 1.5.3

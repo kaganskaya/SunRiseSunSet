@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import GooglePlaces
 
 protocol MainView:class {
     func showSunInfo(results:[String])
+    func getPlace(place:GMSPlace)
 }

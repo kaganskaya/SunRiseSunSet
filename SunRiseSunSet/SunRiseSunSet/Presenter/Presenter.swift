@@ -33,4 +33,26 @@ class Presenter {
             //print("onDisposed")
         }).disposed(by: disposeBag)
     }
+    
+    
+    
+    func getPlace(){
+        
+        self.np.getCurentPlace()
+            .subscribe(
+                onNext: { n in
+                    
+                    self.view?.getPlace(place: n)
+                    
+                    
+            }, onError: { err in
+                print(err.localizedDescription)
+                
+            }, onCompleted: {
+                //print(" onCompleted")
+            }, onDisposed: {
+                //print("onDisposed")
+            }).disposed(by: disposeBag)
+
+    }
 }

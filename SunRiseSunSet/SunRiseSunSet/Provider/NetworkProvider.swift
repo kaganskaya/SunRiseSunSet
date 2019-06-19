@@ -10,6 +10,8 @@ import Foundation
 import Alamofire
 import RxSwift
 import SwiftyJSON
+import CoreLocation
+import GooglePlaces
 
 class NetworkProvider {
     
@@ -62,4 +64,32 @@ class NetworkProvider {
         
     }
     
+    
+    
+    func getCurentPlace() -> Observable<GMSPlace> {
+        return Observable<GMSPlace>.create { observer  in
+            
+            let placesClient = GMSPlacesClient.shared()
+
+            placesClient.currentPlace(callback: { (placeList, error) -> Void in
+               
+                if let error = error {
+                print("Pick Place error: \(error.localizedDescription)")
+                return
+                }
+            
+                if let placeList = placeList {
+                    let place = placeList.likelihoods.first?.place
+                    if let place = place {
+                        observer.onNext(place)
+                        observer.onCompleted()
+                    }
+                }
+            })
+            return Disposables.create(with: {
+            })
+        }
+        }
+        
+
 }
