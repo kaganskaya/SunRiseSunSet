@@ -36,4 +36,27 @@ extension CLLocation {
 }
 
 
+extension String {
+    
+    
+    
+    func UtcToLocalTime() -> String {
+        
+        let dateFormatter = DateFormatter()
+        
+        let locale = dateFormatter.locale
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        let date = dateFormatter.date(from: self)!
+            dateFormatter.dateFormat = "HH:mm:ss"
+            dateFormatter.locale = locale
+        
+        let dateString = dateFormatter.string(from: date)
+        
+        return dateString
+    }
+}
+
+
 

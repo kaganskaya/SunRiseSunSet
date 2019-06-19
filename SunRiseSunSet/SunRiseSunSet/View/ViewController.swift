@@ -77,15 +77,24 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
         self.activity.startAnimating()
         
         self.presenter.getSunInfo(long:(location.coordinate.longitude.description), latt: (location.coordinate.latitude.description))
-        
+
         location.getPlace() {placemark in
             
             guard let placemark = placemark else { return }
             
-            self.placeLabel.text = (placemark.locality)! + ",\n" + (placemark.country)!
+            if placemark.locality != nil && placemark.country != nil {
+            
+                self.placeLabel.text = placemark.locality! + ",\n" + placemark.country!
+                
+            }else{
+                self.placeLabel.text = placemark.name
+
+            }
             
         }
-        
+       
+
+       
     }
     
     
@@ -94,8 +103,8 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
       
         self.results = results
         
-        self.sunRiseTime.text = results[0]
-        self.sunSetTime.text =  results[1]
+        self.sunRiseTime.text = results[0].UtcToLocalTime()
+        self.sunSetTime.text =  results[1].UtcToLocalTime()
         
         self.activity.stopAnimating()
         self.activity.isHidden = true
@@ -111,7 +120,6 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
             serachRequest.naturalLanguageQuery = searchBar.text
         
         let request = MKLocalSearch(request: serachRequest)
-        
             request.start { (response,error) in
             
             

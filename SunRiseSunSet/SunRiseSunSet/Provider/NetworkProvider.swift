@@ -15,7 +15,7 @@ class NetworkProvider {
     
     func serachSunInfo(long:String,latt:String) -> Observable<[String]> {
         
-        let url = "https://api.sunrise-sunset.org/json?lat=\(latt)&lng=\(long)"
+        let url = "https://api.sunrise-sunset.org/json?lat=\(latt)&lng=\(long)&formatted=0"
         
         var results:[String] = []
 
