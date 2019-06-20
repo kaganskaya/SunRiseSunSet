@@ -21,12 +21,8 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
     @IBOutlet weak var activity: UIActivityIndicatorView!
     
     @IBAction func touchLocationIcon(_ sender: Any) {
-        let authState = CLLocationManager.authorizationStatus()
         
-        if(authState == .authorizedAlways || authState == .authorizedWhenInUse){
-            setupLocation(location: locationManager.location!)
-            
-        }
+        setupLocation(location: locationManager.location!)
     }
     
     @IBAction func search(_ sender: Any) {
@@ -42,7 +38,7 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
     var place: GMSPlace!
     var results: [String] = []
     var locationManager = CLLocationManager()
-    
+    var loaded:Bool = false
     
     
     
@@ -50,6 +46,7 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
         return .lightContent
     }
     
+//the default location for simulators was settled to Sydney,Australia
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,14 +73,20 @@ class ViewController: UIViewController,UISearchBarDelegate,CLLocationManagerDele
 
     }
     
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let authState = CLLocationManager.authorizationStatus()
-       
+
         if(authState == .authorizedAlways || authState == .authorizedWhenInUse){
-            setupLocation(location: locationManager.location!)
+           
+        if !self.loaded {
             
+            self.loaded = true
+            setupLocation(location: locationManager.location!)
+        
+        }
+        
         }
     }
     
